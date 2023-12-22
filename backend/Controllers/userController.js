@@ -1,8 +1,9 @@
+const Book = require("../Models/bookModel");
 const User = require("../Models/userModel");
 const bcrypt = require("bcryptjs");
 
 exports.createUser = async (req, res) => {
-  const { username, email, phone, password, avatar } = req.body;
+  const { username, email, phone, password, avatar , books} = req.body;
   const findUserByEmail = await User.findOne({ email });
   const findUserByPhone = await User.findOne({ phone });
   const encrypted = await bcrypt.hash(password, 10);
@@ -17,7 +18,7 @@ exports.createUser = async (req, res) => {
       message: "Phone Exists Already!",
     });
   } else {
-    User.create({ username, email, phone, password: encrypted, avatar })
+    User.create({ username, email, phone, password: encrypted, avatar , books})
       .then(
         res.status(200).cookie("token").json({
           success: true,
@@ -76,5 +77,18 @@ exports.updateUser = async(req,res) => {
       success: false,
       message: "User Not Found!"
     })
+  }
+}
+
+exports.getUserBooks = async (req,res) => {
+  const id = req.params.id
+  const findUser = await User.findById(id)
+  if(findUser){
+    const userBooks = await Book.findById(findUser.books.map((item) => {
+      res.json({books: item._id.toString()})
+    }))
+  }
+  else {
+
   }
 }

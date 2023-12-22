@@ -21,7 +21,10 @@ const userSchema = new mongoose.Schema({
     },
     avatar : {
         type: String
-    }
+    },
+    books : [
+        {id : {type :mongoose.Schema.Types.ObjectId , ref: 'Book'} }
+    ]
 })
 
 const User = mongoose.model("User" , userSchema)

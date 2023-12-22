@@ -1,4 +1,5 @@
 const Book = require("../Models/bookModel")
+const User = require("../Models/userModel")
 
 exports.createBook = (req,res) => {
     const {bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views} = req.body
@@ -37,4 +38,13 @@ exports.upadteBook = async(req,res) => {
             upadted
         })
     }
+}
+
+exports.getBookAuthorDetails = async(req,res) => {
+    const id = req.params.id
+    const getBook = await Book.findById(id)
+    const userid = getBook.uploader._id.toString()
+    console.log(userid);
+    const userFind = await User.findById(userid)
+    console.log(userFind);
 }
