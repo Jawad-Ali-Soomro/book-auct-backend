@@ -2,8 +2,8 @@ const Book = require("../Models/bookModel")
 const User = require("../Models/userModel")
 
 exports.createBook = (req,res) => {
-    const {bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views} = req.body
-    const created = Book.create({bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views})
+    const {bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views , coverImage} = req.body
+    const created = Book.create({bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views , coverImage})
     .then(res.status(200).json({
         success: true,
         message: "Book Created"

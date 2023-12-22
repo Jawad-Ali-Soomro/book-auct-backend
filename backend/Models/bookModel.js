@@ -4,6 +4,9 @@ const bookSchema = new mongoose.Schema({
     bookName : {
         type: String
     },
+    coverImage : {
+        type: String
+    },
     bookAuthor : {
         type: String
     },
