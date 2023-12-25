@@ -45,7 +45,7 @@ exports.loginUser = async (req, res) => {
         message: "Password din't matched",
       });
     }
-  } else {
+  } else{
     return res.status(400).json({
       success: false,
       message: "User Not Found",
@@ -89,6 +89,9 @@ exports.getUserBooks = async (req,res) => {
     }))
   }
   else {
-
+    res.status(401).json({
+      success: false,
+      message: "User Not Found"
+    })
   }
 }

@@ -1,16 +1,28 @@
 const Book = require("../Models/bookModel")
 const User = require("../Models/userModel")
 
-exports.createBook = (req,res) => {
-    const {bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views , coverImage} = req.body
-    const created = Book.create({bookName , bookAuthor , originalPrice , category , publishDate , uploader , owner , views , coverImage})
-    .then(res.status(200).json({
+exports.createBook = async(req,res) => {
+    const {bookName , originalPrice , bookAuthor , category , publishDate , views , coverImage} = req.body
+    const id = req.params.id
+    const findUserAndInsertBook = await User.findById(id)
+    if(findUserAndInsertBook){
+        const createdBook = await Book.create({bookName , bookAuthor , originalPrice , category , publishDate , uploader:await findUserAndInsertBook._id , owner:await findUserAndInsertBook._id , views , coverImage})
+        .then(res.status(200).json({
         success: true,
         message: "Book Created"
-    }))
-    .catch((err) => {
+    })).catch((err) => {
         res.json(err)
     })
+    if(createdBook) {
+        await findUserAndInsertBook.books.push(createdBook._id.toString())
+    }
+    }
+    else {
+        return res.status(401).json({
+            success: false,
+            message : "You are unauthorized to create a book"
+        })
+    }
 }
 
 exports.getAllBooks = async(req,res) => {
@@ -40,11 +52,13 @@ exports.upadteBook = async(req,res) => {
     }
 }
 
-exports.getBookAuthorDetails = async(req,res) => {
+exports.getBookOwnerDetails = async(req,res) => {
     const id = req.params.id
     const getBook = await Book.findById(id)
-    const userid = getBook.uploader._id.toString()
+    const userid = getBook.owner
     console.log(userid);
     const userFind = await User.findById(userid)
-    console.log(userFind);
+    res.json({
+        user : userFind
+    })
 }
