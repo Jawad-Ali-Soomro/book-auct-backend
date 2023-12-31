@@ -1,6 +1,7 @@
 const Book = require("../Models/bookModel");
 const User = require("../Models/userModel");
 const bcrypt = require("bcryptjs");
+const { ObjectId } = require('mongodb');
 
 exports.createUser = async (req, res) => {
   const { username, email, phone, password, avatar , books} = req.body;
@@ -94,4 +95,12 @@ exports.getUserBooks = async (req,res) => {
       message: "User Not Found"
     })
   }
+}
+
+exports.getUserById  = async (req,res) => {
+  const {id} = req.body
+  const foundUser = await User.findById(id)
+  res.status(200).json({
+    user : foundUser
+  })
 }
