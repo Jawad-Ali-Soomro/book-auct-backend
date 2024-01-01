@@ -5,6 +5,10 @@ const mainBidSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    bookId: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Book'
+    },
     price: {
         type: Number
     }
