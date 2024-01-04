@@ -35,7 +35,6 @@ exports.createBook = async (req, res) => {
       .catch((err) => {
         res.json(err);
       });
-    findUserAndInsertBook.books.push(createdBook._id);
   } else {
     return res.status(401).json({
       success: false,

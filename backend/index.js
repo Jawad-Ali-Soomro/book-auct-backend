@@ -1,22 +1,23 @@
-const express = require('express')
-const { connectDatabase } = require('./Config/connectDatabse')
-const userRouter = require('./Routes/userRoute')
-const bookRouter = require('./Routes/bookRoute')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const bidRoute = require('./Routes/bidRoute')
-const mainBidRoute = require('./Routes/mainBidRoute')
-const app = express()
-app.use(bodyParser.json())
-app.use(cors())
-require('dotenv').config()
-const port = process.env.PORT
-connectDatabase()
-app.use(express.json())
-app.listen(port , () => {
-    console.log(`Server Is Working At Port ${port}`);
-})
-app.use('/api/v1', userRouter)
-app.use('/api/v1' , bookRouter)
-app.use('/api/v1' , bidRoute)
-app.use('/api/v1' , mainBidRoute)
+const express = require("express");
+const { connectDatabase } = require("./Config/connectDatabse");
+const userRouter = require("./Routes/userRoute");
+const colors = require("colors");
+const bookRouter = require("./Routes/bookRoute");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const bidRoute = require("./Routes/bidRoute");
+const mainBidRoute = require("./Routes/mainBidRoute");
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+require("dotenv").config();
+const port = process.env.PORT;
+connectDatabase();
+app.use(express.json());
+app.listen(port, () => {
+  console.log(`Server Is Working At Port ${port}`.bgGreen.black);
+});
+app.use("/api/v1", userRouter);
+app.use("/api/v1", bookRouter);
+app.use("/api/v1", bidRoute);
+app.use("/api/v1", mainBidRoute);
