@@ -1,7 +1,7 @@
 const mainBid = require("../Models/mainBid");
 const User = require("../Models/userModel");
 
-exports.createMainBid = async (req, res) => {
+exports.createMainBid =  (req, res) => {
   const { id, price, bookId } = req.body;
   mainBid
     .create({ id, price, bookId })

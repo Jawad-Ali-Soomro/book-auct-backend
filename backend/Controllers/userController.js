@@ -61,7 +61,7 @@ exports.loginUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const id = req.params.id;
-  const { username, phone, email, password } = req.body;
+  const { username, phone, email, password, avatar } = req.body;
   const findUser = await User.findById(id);
   if (findUser) {
     const updateUser = await User.findByIdAndUpdate(id, {
@@ -69,6 +69,7 @@ exports.updateUser = async (req, res) => {
       phone,
       email,
       password,
+      avatar,
     });
     if (updateUser) {
       res.status(201).json({
